@@ -1,0 +1,33 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}我的待辦清單{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">哈囉 {{ user.username }}，這是你的清單：</h2>
+
+<form method="post" class="mb-4">
+  {% csrf_token %}
+  <div class="input-group">
+    {{ form.title }}
+    <button type="submit" class="btn btn-primary">新增待辦</button>
+  </div>
+</form>
+
+<ul class="list-group">
+  {% for todo in todos %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span class="{% if todo.completed %}text-decoration-line-through text-muted{% endif %}">
+        {{ todo.title }}
+      </span>
+      <div>
+        <a href="{% url 'toggle_complete' todo.id %}" class="btn btn-sm btn-outline-success">
+          {% if todo.completed %}未完成{% else %}完成{% endif %}
+        </a>
+        <a href="{% url 'delete_todo' todo.id %}" class="btn btn-sm btn-outline-danger">刪除</a>
+      </div>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-muted">尚無待辦事項～</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}登入{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <h2 class="mb-4">登入</h2>
+    <form method="post" class="border p-4 bg-white rounded shadow-sm">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">帳號</label>
+        <input type="text" name="username" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">密碼</label>
+        <input type="password" name="password" class="form-control">
+      </div>
+
+      {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+
+      <button type="submit" class="btn btn-success w-100">登入</button>
+    </form>
+    <div class="text-center mt-3">
+      <a href="{% url 'register' %}">還沒有帳號？點此註冊</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}註冊新帳號{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <h2 class="mb-4">註冊新帳號</h2>
+    <form method="post" class="border p-4 bg-white rounded shadow-sm">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li>{{ field.label }}：{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <button type="submit" class="btn btn-primary w-100">註冊</button>
+    </form>
+    <div class="text-center mt-3">
+      <a href="{% url 'login' %}">已經有帳號？點此登入</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
